@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\BaseRequest as BaseRequest;
 
-class UserRequest extends BaseRequest
+class AuthRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,8 @@ class UserRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8|confirmed'
+            'email' => 'required|email|exists:users',
+            'password' => 'required|min:8'
         ];
     }
 }

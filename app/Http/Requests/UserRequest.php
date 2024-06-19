@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\BaseRequest as BaseRequest;
 
 class UserRequest extends BaseRequest
@@ -14,7 +13,7 @@ class UserRequest extends BaseRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
