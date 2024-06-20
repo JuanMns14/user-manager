@@ -38,7 +38,7 @@ php artisan serve
     POST - /api/auth/register
     ```
     Estructura
-    ```bash
+    ```json
     {
         "name":"User",
         "email": "user@mail.com",
@@ -53,7 +53,7 @@ php artisan serve
     Estructura
 
 
-    ```bash
+    ```json
     {
         "email": "user@mail.com",
         "password": "userpass",
@@ -81,7 +81,7 @@ php artisan serve
     POST - /api/v1/users
     ```
     Estructura
-    ```bash
+    ```json
     {
         "name":"User",
         "email": "user@mail.com",
@@ -94,7 +94,7 @@ php artisan serve
     PUT - /api/v1/users/{user}
     ```
     Estructura
-    ```bash
+    ```json
     {
         "name":"userUpdate",
         "email": "userUpdate@mail.com",
