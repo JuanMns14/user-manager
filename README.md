@@ -65,7 +65,7 @@ php artisan serve
     POST - /api/auth/logout
     ```
 
-## CRUD Usuarios - Requiere Autenticacion
+## CRUD Usuarios - Requiere Autenticacion (Token)
 
 - Obtener la lista de los usuarios
 
@@ -106,7 +106,7 @@ php artisan serve
     ```bash
     DELETE - /api/v1/users/{user}
     ```
-## OpenAI API
+## OpenAI API - Requiere Autenticacion (Token)
  - Generar texto
     ```bash
     POST - /api/v1/ai/generate-text
@@ -118,7 +118,7 @@ php artisan serve
         "input": "¿Qué es un Pull Request?"
     }
     ```
-## Strapi API
+## Strapi API - Requiere Autenticacion (Token)
 Todas las respuestas estan filtradas y formateadas con toda la informacion de las publicaciones y los comentarios incluyendo las relaciones.
 ### Posts
 - Obtener la lista de las publicaciones
