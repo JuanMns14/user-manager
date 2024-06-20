@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends BaseController
@@ -14,8 +15,12 @@ class UserController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse containing the user list or an error message if retrieval fails.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->user()->tokenCan('user:index')) {
+            return $this->sendError("Unauthorized", [], 401);
+        }
+
         $users = User::all();
         return $this->sendResponse($users, "User list", 200);
     }
@@ -29,8 +34,12 @@ class UserController extends BaseController
      *
      * @throws \Throwable If an unexpected error occurs during user retrieval.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        if (!$request->user()->tokenCan('user:show')) {
+            return $this->sendError("Unauthorized", [], 401);
+        }
+
         try {
             $user = User::find($id);
         } catch (\Throwable $th) {
@@ -41,7 +50,7 @@ class UserController extends BaseController
             return $this->sendError("No user found", [], 404);
         }
 
-        return $this->sendResponse($user, "User Detail.", 200);
+        return $this->sendResponse($user, "User detail.", 200);
     }
 
     /**
@@ -53,12 +62,17 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
+        if (!$request->user()->tokenCan('user:store')) {
+            return $this->sendError("Unauthorized", [], 401);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        $user->roles()->attach(2);
         return $this->sendResponse($user, "User created successfully.", 201);
     }
 
@@ -76,6 +90,10 @@ class UserController extends BaseController
      */
     public function update(UserRequest $request, $id)
     {
+        if (!$request->user()->tokenCan('user:update')) {
+            return $this->sendError("Unauthorized", [], 401);
+        }
+
         try {
             $user = User::find($id);
         } catch (\Throwable $th) {
@@ -105,8 +123,12 @@ class UserController extends BaseController
      *
      * @throws \Throwable If an unexpected error occurs during user retrieval or deletion.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if (!$request->user()->tokenCan('user:update')) {
+            return $this->sendError("Unauthorized", [], 401);
+        }
+
         try {
             $user = User::find($id);
         } catch (\Throwable $th) {
