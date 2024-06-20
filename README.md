@@ -6,7 +6,7 @@ Verifica la guía oficial de instalación de Laravel para conocer los requisitos
 
 Clona el repositorio
 ```bash
-git clone git@github.com:JuanMns14/user-manager.git
+git clone https://github.com/JuanMns14/user-manager.git
 ```
 Cambia al directorio del repositorio
 ```bash
