@@ -31,6 +31,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    // Relación muchos a muchos con Role
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

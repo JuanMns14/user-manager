@@ -24,6 +24,7 @@ class AuthController extends BaseController
             'password' => Hash::make($request->password),
         ]);
 
+        $user->roles()->attach(1);
         return $this->sendResponse($user, "Accout created successfully", 201);
     }
 
@@ -40,9 +41,25 @@ class AuthController extends BaseController
             return $this->sendError("Invalid login credentials", [], 401);
         };
 
+        $abilities = [];
+        if ($user->roles()->find(1)) {
+            $abilities = [
+                'user:index',
+                'user:show',
+                'user:store',
+                'user:update',
+                'user:destroy',
+            ];
+        } else if ($user->roles()->find(2)) {
+            $abilities = [
+                'user:index',
+                'user:show',
+            ];
+        }
+
         $response = [
             'user' => $user,
-            'token' => $user->createToken('auth_token')->plainTextToken,
+            'token' => $user->createToken('auth_token', $abilities)->plainTextToken,
         ];
 
         return $this->sendResponse($response, "Login successfully", 200);
